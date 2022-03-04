@@ -3,6 +3,7 @@
 ## Resources
 
 - <https://go.dev/doc/tutorial/getting-started>
+- <https://www.codecademy.com/learn/learn-go>
 
 ## Steps
 
