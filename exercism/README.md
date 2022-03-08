@@ -14,3 +14,4 @@
 2. Then call: `brew install exercism`
 3. Finally connect your exercism account: `configure --token=${token}`
     - Find your token in the [exercism settings](https://exercism.org/settings/api_cli)
+4. Configure the exercism workspace: `exercism configure --workspace .`
