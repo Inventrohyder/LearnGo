@@ -15,3 +15,4 @@
 3. Finally connect your exercism account: `configure --token=${token}`
     - Find your token in the [exercism settings](https://exercism.org/settings/api_cli)
 4. Configure the exercism workspace: `exercism configure --workspace .`
+5. To download a specific exercise run `exercism download --exercise=<exercise slug> --track=go`
