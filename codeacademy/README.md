@@ -10,3 +10,4 @@
     1. Specific projects:
         1. `go run 1_Gopher_it.go`
         2. `go run 2_Comic_mischief.go`
+        3. `go run 3_Bank_heist.go`
