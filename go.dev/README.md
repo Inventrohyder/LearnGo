@@ -1,4 +1,4 @@
-# Learning the Go Language
+# Learning the Go Language on go.dev
 
 ## Resources
 
