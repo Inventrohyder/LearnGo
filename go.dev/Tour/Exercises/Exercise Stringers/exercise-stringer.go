@@ -1,10 +1,13 @@
 package main
 
 import "fmt"
+import "strings"
 
 type IPAddr [4]byte
 
-// TODO: Add a "String() string" method to IPAddr.
+func (p IPAddr) String() string {
+	return strings.Trim(strings.Replace(fmt.Sprint(p[:]), " ", ".", -1), "[]")
+}
 
 func main() {
 	hosts := map[string]IPAddr{
