@@ -16,4 +16,6 @@ method such that `ErrNegativeSqrt(-2).Error()` returns `"cannot Sqrt negative nu
 
 **Note:** A call to `fmt.Sprint(e)` inside the `Error` method will send the program into an infinite loop. You can avoid this by converting `e` first: `fmt.Sprint(float64(e))`. Why?
 
+> That is because `fmt.Sprint(e)` will call `e.Error()` to convert `e` to a `string` which intern will call `fmt.Sprint(e)` again. leading to a non-ending recursive loop.
+
 Change your `Sqrt` function to return an `ErrNegativeSqrt` value when given a negative number.
