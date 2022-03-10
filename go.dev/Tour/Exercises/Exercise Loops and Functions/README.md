@@ -10,4 +10,8 @@ Repeating this adjustment makes the guess better and better until we reach an an
 
 Implement this in the func Sqrt provided. A decent starting guess for z is 1, no matter what the input. To begin with, repeat the calculation 10 times and print each z along the way. See how close you get to the answer for various values of x (1, 2, 3, ...) and how quickly the guess improves.
 
-> **Hint:** To declare and initialize a floating point value, give it floating point syntax or use a conversion:
+> **Hint:** To declare and initialize a floating point value, give it floating point syntax or use a conversion: $$z := 1.0$$ $$z := float64(1)$$
+
+Next, change the loop condition to stop once the value has stopped changing (or only changes by a very small amount). See if that's more or fewer than 10 iterations. Try other initial guesses for z, like x, or x/2. How close are your function's results to the math.Sqrt in the standard library?
+
+(Note: If you are interested in the details of the algorithm, the z² − x above is how far away z² is from where it needs to be (x), and the division by 2z is the derivative of z², to scale how much we adjust z by how quickly z² is changing. This general approach is called [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method). It works well for many functions but especially well for square root.)
