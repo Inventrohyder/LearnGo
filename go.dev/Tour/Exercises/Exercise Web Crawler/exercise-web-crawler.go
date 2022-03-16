@@ -6,8 +6,9 @@ import (
 )
 
 var (
-	seen map[string]int
-	mu   sync.Mutex
+	seen      map[string]int
+	waitGroup sync.WaitGroup
+	mu        sync.Mutex
 )
 
 type Fetcher interface {
@@ -19,6 +20,7 @@ type Fetcher interface {
 // Crawl uses fetcher to recursively crawl
 // pages starting with url, to a maximum of depth.
 func Crawl(url string, depth int, fetcher Fetcher) {
+	defer waitGroup.Done()
 	if depth <= 0 {
 		return
 	}
@@ -37,6 +39,7 @@ func Crawl(url string, depth int, fetcher Fetcher) {
 	}
 	fmt.Printf("✅ found: %s %q\n", url, body)
 	for _, u := range urls {
+		waitGroup.Add(1)
 		go Crawl(u, depth-1, fetcher)
 	}
 	return
@@ -44,7 +47,10 @@ func Crawl(url string, depth int, fetcher Fetcher) {
 
 func main() {
 	seen = make(map[string]int)
+	waitGroup = sync.WaitGroup{}
+	waitGroup.Add(1)
 	go Crawl("https://golang.org/", 4, fetcher)
+	waitGroup.Wait()
 }
 
 // fakeFetcher is Fetcher that returns canned results.
