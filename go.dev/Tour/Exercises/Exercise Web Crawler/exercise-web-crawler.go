@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+var seen map[string]int
+
 type Fetcher interface {
 	// Fetch returns the body of URL and
 	// a slice of URLs found on that page.
@@ -14,17 +16,22 @@ type Fetcher interface {
 // pages starting with url, to a maximum of depth.
 func Crawl(url string, depth int, fetcher Fetcher) {
 	// TODO: Fetch URLs in parallel.
-	// TODO: Don't fetch the same URL twice.
 	// This implementation doesn't do either:
 	if depth <= 0 {
 		return
 	}
+	if _, ok := seen[url]; ok {
+		fmt.Printf("⚠️ Already seen: %s\n", url)
+		seen[url]++
+		return
+	}
 	body, urls, err := fetcher.Fetch(url)
+	seen[url]++
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Printf("found: %s %q\n", url, body)
+	fmt.Printf("✅ found: %s %q\n", url, body)
 	for _, u := range urls {
 		Crawl(u, depth-1, fetcher)
 	}
@@ -32,6 +39,7 @@ func Crawl(url string, depth int, fetcher Fetcher) {
 }
 
 func main() {
+	seen = make(map[string]int)
 	Crawl("https://golang.org/", 4, fetcher)
 }
 
@@ -47,7 +55,7 @@ func (f fakeFetcher) Fetch(url string) (string, []string, error) {
 	if res, ok := f[url]; ok {
 		return res.body, res.urls, nil
 	}
-	return "", nil, fmt.Errorf("not found: %s", url)
+	return "", nil, fmt.Errorf("❌ not found: %s", url)
 }
 
 // fetcher is a populated fakeFetcher.
